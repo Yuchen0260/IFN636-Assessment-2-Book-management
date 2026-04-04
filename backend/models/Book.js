@@ -7,8 +7,8 @@ const bookSchema = new mongoose.Schema(
     isbn: {type: String, required: true, unique: true},
     category: {type: String, required: true},
     description: {type: String, default: ""},
-    publishedYear: {type: Number, required:true},
     status: {type: String, enum: ["available", "borrowed"], default: "available"},
+    //ref used to mongoose populate()
     createdBy: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true}
     },
     // Mongoose auto set time
