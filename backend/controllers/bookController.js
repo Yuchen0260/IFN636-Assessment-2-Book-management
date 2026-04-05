@@ -11,7 +11,7 @@ const createBook = async (req, res) => {
             category,
             description,
             status,
-            createdBy: req.user.id, // 当前登录用户 id
+            createdBy: req.user._id, // 当前登录用户 id
         });
 
         res.status(201).json(book);
