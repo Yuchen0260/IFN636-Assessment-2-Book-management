@@ -69,6 +69,7 @@ const BooksList = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-100 text-left">
+                <th className="p-3 border">Image</th>
                 <th className="p-3 border">Title</th>
                 <th className="p-3 border">Author</th>
                 <th className="p-3 border">ISBN</th>
@@ -80,6 +81,7 @@ const BooksList = () => {
             <tbody>
               {books.map((book) => (
                 <tr key={book._id}>
+                  <td className="p-3 border"><img src={book.coverImage} className="w-16 h-24 object-cover rounded"></img></td>
                   <td className="p-3 border">{book.title}</td>
                   <td className="p-3 border">{book.author}</td>
                   <td className="p-3 border">{book.isbn}</td>
