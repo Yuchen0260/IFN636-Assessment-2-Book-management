@@ -10,6 +10,7 @@ import BooksList from "./pages/BooksList";
 import AddBook from "./pages/AddBook";
 import EditBook from "./pages/EditBook";
 import Home from "./pages/Home";
+import BookDetail from './pages/BookDetail';
 
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -20,14 +21,11 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* <Route path="/profile" element={<Profile />} /> */}
-
-        <Route path="/" element={<Home />} />
-
         <Route path="/books" element={<BooksList />} />
+        <Route path="/books/:id" element={<BookDetail />} />
 
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/books/add" element={<ProtectedRoute><AddBook /></ProtectedRoute>} />

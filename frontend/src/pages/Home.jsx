@@ -48,32 +48,26 @@ const Home = () => {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {books.map((book) => (
-                        <div
+                        <Link
+                            to={`/books/${book._id}`}
                             key={book._id}
-                            className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition"
+                            className="bg-white rounded-lg shadow p-4 hover:shadow-lg transition block"
                         >
-                            <div className="bg-gray-200 flex items-center justify-center h-60">
-                                <img
-                                    src={book.coverImage}
-                                    alt={book.title}
-                                    className="h-52 object-cover rounded shadow mb-4 flex items-center justify-center"
-                                />
-                            </div>
-
+                            <img
+                                src={book.coverImage || "https://via.placeholder.com/220x300?text=No+Image"}
+                                alt={book.title}
+                                className="w-full h-72 object-cover rounded mb-4"
+                            />
 
                             <h2 className="text-lg font-bold mb-1">{book.title}</h2>
                             <p className="text-gray-700 mb-1">{book.author}</p>
                             <p className="text-sm text-gray-500 mb-1">
                                 Category: {book.category}
                             </p>
-                            <p className="text-sm text-gray-500 mb-3">
+                            <p className="text-sm text-gray-500">
                                 Status: {book.status}
                             </p>
-
-                            <p className="text-sm text-gray-600 line-clamp-3">
-                                {book.description || "No description available."}
-                            </p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
