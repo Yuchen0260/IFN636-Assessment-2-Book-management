@@ -1,28 +1,48 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: self-hosted
 
-        steps:
-        - name: Checkout code
-            uses: actions/checkout@v2
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-        - name: Set up Node.js
-            uses: actions/setup-node@v2
-            with:
-                node-version: '14'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-        - name: Install dependencies
-            run: npm install
+      - name: Stop old app
+        run: pm2 stop all
 
-        - name: Run tests
-            run: npm test
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: |
+          npm install
+
+      - name: Install Frontend and Build
+        working-directory: ./frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Run Backend Tests
+        working-directory: ./backend
+        run: npm test
+
+      - name: Create .env file
+        run: |
+          cd backend
+          echo "${{ secrets.PROD }}" > .env
+
+      - name: Start App
+        run: pm2 start all
+
+      - name: Restart App
+        run: pm2 restart all
