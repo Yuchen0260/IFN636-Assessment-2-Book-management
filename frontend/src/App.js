@@ -22,9 +22,9 @@ function App() {
         {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/books" element={<BooksList />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/books/add" element={<AddBook />} />
-        <Route path="/books/edit/:id" element={<EditBook />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/books/add" element={<ProtectedRoute><AddBook /></ProtectedRoute>} />
+        <Route path="/books/edit/:id" element={<ProtectedRoute><EditBook /></ProtectedRoute>} />
 
       </Routes>
     </Router>
