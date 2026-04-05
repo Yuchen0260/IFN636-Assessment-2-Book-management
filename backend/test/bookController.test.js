@@ -25,6 +25,7 @@ describe('CreateBook Function Test', () => {
             body: {
                 title: "The Lord of the Rings",
                 author: "J.R.R. Tolkien",
+                coverImage: "../frontend\public\lord of ring cover imange.jpg",
                 isbn: "114514",
                 category: "Fantasy",
                 description: "Magic book",
