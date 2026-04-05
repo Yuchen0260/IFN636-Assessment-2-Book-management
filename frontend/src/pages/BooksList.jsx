@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
 import { useAuth } from "../context/AuthContext";
@@ -7,14 +7,11 @@ const BooksList = () => {
   const { user } = useAuth();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchBooks = async () => {
     try {
-      const response = await axiosInstance.get("/api/books", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await axiosInstance.get("/api/books");
       setBooks(response.data);
     } catch (error) {
       console.error("Failed to fetch books:", error);
@@ -27,6 +24,22 @@ const BooksList = () => {
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  const filteredBooks = useMemo(() => {
+    const keyword = searchTerm.trim().toLowerCase();
+
+    if (!keyword) return books;
+
+    return books.filter((book) => {
+      return (
+        book.title?.toLowerCase().includes(keyword) ||
+        book.author?.toLowerCase().includes(keyword) ||
+        book.category?.toLowerCase().includes(keyword) ||
+        book.isbn?.toLowerCase().includes(keyword) ||
+        book.status?.toLowerCase().includes(keyword)
+      );
+    });
+  }, [books, searchTerm]);
 
   const handleDelete = async (bookId) => {
     const confirmed = window.confirm("Are you sure you want to delete this book?");
@@ -52,24 +65,35 @@ const BooksList = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
         <h1 className="text-3xl font-bold">Book Records Management</h1>
-        <Link
-          to="/books/add"
-          className="bg-green-600 text-white px-4 py-2 rounded"
-        >
-          Add Book
-        </Link>
+
+        <div className="flex gap-3">
+          <input
+            type="text"
+            placeholder="Search title, author, ISBN, category..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full md:w-80 p-2 border rounded"
+          />
+
+          <Link
+            to="/books/add"
+            className="bg-green-600 text-white px-4 py-2 rounded whitespace-nowrap"
+          >
+            Add Book
+          </Link>
+        </div>
       </div>
 
-      {books.length === 0 ? (
-        <div className="bg-white p-4 rounded shadow">No books found.</div>
+      {filteredBooks.length === 0 ? (
+        <div className="bg-white p-4 rounded shadow">No matching books found.</div>
       ) : (
         <div className="bg-white shadow rounded overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-gray-100 text-left">
-                <th className="p-3 border">Image</th>
+                <th className="p-3 border">Cover</th>
                 <th className="p-3 border">Title</th>
                 <th className="p-3 border">Author</th>
                 <th className="p-3 border">ISBN</th>
@@ -79,9 +103,15 @@ const BooksList = () => {
               </tr>
             </thead>
             <tbody>
-              {books.map((book) => (
+              {filteredBooks.map((book) => (
                 <tr key={book._id}>
-                  <td className="p-3 border"><img src={book.coverImage} className="w-16 h-24 object-cover rounded"></img></td>
+                  <td className="p-3 border">
+                    <img
+                      src={book.coverImage}
+                      alt={book.title}
+                      className="w-12 h-16 object-cover rounded"
+                    />
+                  </td>
                   <td className="p-3 border">{book.title}</td>
                   <td className="p-3 border">{book.author}</td>
                   <td className="p-3 border">{book.isbn}</td>
