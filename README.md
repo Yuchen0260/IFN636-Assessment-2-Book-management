@@ -22,3 +22,30 @@ In this assignment you will complete the following tasks:
 
 ---
 
+### Authentication and Authorization
+- User registration and login
+- Protected API access using `authMiddleware`
+- Only logged-in users can modify book records
+- Unauthenticated users can still browse public book data
+
+### Book CRUD Backend
+Implemented backend CRUD operations for books:
+
+- `createBook` — add a new book
+- `getBooks` — retrieve book list
+- `getBookById` — retrieve book detail
+- `updateBook` — update book detail
+- `deleteBook` — remove book
+
+### API Protection Rules
+Protected by `authMiddleware`:
+- `createBook`
+- `updateBook`
+- `deleteBook`
+
+Public APIs:
+- `getBooks`
+- `getBookById`
+
+
+

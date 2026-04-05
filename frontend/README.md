@@ -2,6 +2,41 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Frontend Features
+- Display books list on the home page
+- Search books by:
+  - Book name
+  - Author
+  - ISBN
+  - Category
+- Search is available on:
+  - Home page
+  - Book management page
+- Add, edit, and delete books
+- Connect all book operations to MongoDB Atlas
+- Show dashboard statistics:
+  - Total number of books
+  - Number of borrowed books
+  - Number of available books
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -68,3 +103,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
