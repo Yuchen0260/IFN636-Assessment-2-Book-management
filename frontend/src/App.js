@@ -2,8 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Books from './pages/Books';
+// import Profile from './pages/Profile';
+// import Books from './pages/Books';
+
+import Dashboard from "./pages/Dashboard";
+import BooksList from "./pages/BooksList";
+import AddBook from "./pages/AddBook";
+
+
 
 function App() {
   return (
@@ -12,8 +18,11 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/Books" element={<Books />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
+        <Route path="/Books" element={<BooksList />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/books/add" element={<AddBook />} />
       </Routes>
     </Router>
   );
