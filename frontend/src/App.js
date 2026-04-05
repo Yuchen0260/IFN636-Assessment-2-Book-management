@@ -10,6 +10,8 @@ import BooksList from "./pages/BooksList";
 import AddBook from "./pages/AddBook";
 import EditBook from "./pages/EditBook";
 
+import ProtectedRoute from './components/ProtectedRoute';
+
 
 
 function App() {
@@ -19,7 +21,9 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         {/* <Route path="/profile" element={<Profile />} /> */}
+
         <Route path="/books" element={<BooksList />} />
 
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
