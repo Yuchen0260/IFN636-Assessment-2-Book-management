@@ -24,7 +24,7 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/books/add" element={<AddBook />} />
-        <Route path="/books/edit" element={<EditBook />} />
+        <Route path="/books/edit/:id" element={<EditBook />} />
 
       </Routes>
     </Router>
