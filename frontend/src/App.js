@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Dashboard from "./pages/Dashboard";
 import BooksList from "./pages/BooksList";
 import AddBook from "./pages/AddBook";
+import EditBook from "./pages/EditBook";
 
 
 
@@ -19,10 +20,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
-        <Route path="/Books" element={<BooksList />} />
+        <Route path="/books" element={<BooksList />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/books/add" element={<AddBook />} />
+        <Route path="/books/edit" element={<EditBook />} />
+
       </Routes>
     </Router>
   );
