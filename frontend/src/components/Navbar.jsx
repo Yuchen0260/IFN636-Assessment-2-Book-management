@@ -13,8 +13,16 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold">
-        Your apps name(Library)
+
+        <div className="bg-white rounded-full px-4 py-2 shadow-sm inline-flex items-center">
+          <img
+            src="/LIBRARY LOGO.png"
+            alt="Library logo"
+            className="h-8 w-auto object-contain"
+          />
+        </div>
       </Link>
+      
 
       <div>
         {user ? (
