@@ -11,6 +11,7 @@ const EditBook = () => {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
+    coverImage:"",
     isbn: "",
     category: "",
     description: "",
@@ -31,6 +32,7 @@ const EditBook = () => {
         setFormData({
           title: response.data.title || "",
           author: response.data.author || "",
+          coverImage: response.data.coverImage || "",
           isbn: response.data.isbn || "",
           category: response.data.category || "",
           description: response.data.description || "",
@@ -99,6 +101,15 @@ const EditBook = () => {
             onChange={handleChange}
             className="w-full mb-4 p-2 border rounded"
             required
+          />
+
+          <input
+            type="text"
+            name="coverImage"
+            placeholder="Image URL"
+            value={formData.coverImage}
+            onChange={handleChange}
+            className="w-full mb-4 p-2 border rounded"
           />
 
           <input

@@ -3,10 +3,11 @@ const Book = require("../models/Book");
 const createBook = async (req, res) => {
 
     try {
-        const { title, author, isbn, category, description, status } = req.body;
+        const { title, author, coverImage, isbn, category, description, status } = req.body;
         const book = await Book.create({
             title,
             author,
+            coverImage,
             isbn,
             category,
             description,
@@ -48,12 +49,13 @@ const getBookById = async (req, res) => {
 //U Update book
 const updateBook = async (req, res) => {
     try {
-        const { title, author, isbn, category, description, status } = req.body;
+        const { title, author, coverImage, isbn, category, description, status } = req.body;
         const book = await Book.findById(req.params.id);
         if (!book) {return res.status(404).json({ message: "Book not found" });}
 
         book.title = title ?? book.title;
         book.author = author ?? book.author;
+        book.coverImage = coverImage ?? book.coverImage;
         book.isbn = isbn ?? book.isbn;
         book.category = category ?? book.category;
         book.description = description ?? book.description;

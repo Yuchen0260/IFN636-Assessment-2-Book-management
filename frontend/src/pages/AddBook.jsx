@@ -10,6 +10,7 @@ const AddBook = () => {
   const [formData, setFormData] = useState({
     title: "",
     author: "",
+    coverImage: "",
     isbn: "",
     category: "",
     description: "",
@@ -64,6 +65,15 @@ const AddBook = () => {
             onChange={handleChange}
             className="w-full mb-4 p-2 border rounded"
             required
+          />
+
+          <input
+            type="text"
+            name="coverImage"
+            placeholder="Image URL"
+            value={formData.coverImage}
+            onChange={handleChange}
+            className="w-full mb-4 p-2 border rounded"
           />
 
           <input

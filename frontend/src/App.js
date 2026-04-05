@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import BooksList from "./pages/BooksList";
 import AddBook from "./pages/AddBook";
 import EditBook from "./pages/EditBook";
+import Home from "./pages/Home";
 
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -23,6 +24,8 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* <Route path="/profile" element={<Profile />} /> */}
+
+        <Route path="/" element={<Home />} />
 
         <Route path="/books" element={<BooksList />} />
 
