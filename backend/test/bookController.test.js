@@ -179,7 +179,7 @@ describe('GetBookById Function Test', () => {
     it('should return 500 if error occurs', async () => {
         const findByIdStub = sinon.stub(Book, 'findById').throws(new Error('DB Error'));
 
-        const req = { params: { id: "1" } };
+        const req = { params: { id: "test_id" } };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.spy()
@@ -238,7 +238,7 @@ describe('UpdateBook Function Test', () => {
         const findByIdStub = sinon.stub(Book, 'findById').resolves(null);
 
         const req = {
-            params: { id: "999" },
+            params: { id: "test_id" },
             body: {}
         };
 
@@ -283,7 +283,7 @@ describe('DeleteBook Function Test', () => {
     it('should return 404 if book not found', async () => {
         const findByIdStub = sinon.stub(Book, 'findById').resolves(null);
 
-        const req = { params: { id: "999" } };
+        const req = { params: { id: "test_id" } };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.spy()
@@ -300,7 +300,7 @@ describe('DeleteBook Function Test', () => {
     it('should return 500 if error occurs', async () => {
         const findByIdStub = sinon.stub(Book, 'findById').throws(new Error('DB Error'));
 
-        const req = { params: { id: "1" } };
+        const req = { params: { id: "test_id" } };
         const res = {
             status: sinon.stub().returnsThis(),
             json: sinon.spy()
