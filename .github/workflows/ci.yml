@@ -29,7 +29,9 @@ jobs:
       - name: Install Frontend and Build
         working-directory: ./frontend
         run: |
+          rm -rf node_modules
           npm install
+          chmod +x node_modules/.bin/react-scripts
           npm run build
 
       - name: Run Backend Tests
