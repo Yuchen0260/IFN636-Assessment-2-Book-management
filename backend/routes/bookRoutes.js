@@ -1,23 +1,33 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 const {
-  createBook,
-  getBooks,
-  getBookById,
-  updateBook,
-  deleteBook,
-} = require("../controllers/bookController");
+    createBook,
+    getBooks,
+    getBookById,
+    updateBook,
+    deleteBook,
+    borrowBook,
+    returnBook,
+} = require('../controllers/bookController');
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect } = require('../middleware/authMiddleware');
+const reviewRoutes = require('./reviewRoutes');
 
-// public get books部分，用于主页展示书籍和细节
-router.get("/", getBooks);
-router.get("/:id", getBookById);
+// Public routes
+router.get('/',    getBooks);
+router.get('/:id', getBookById);
 
-// 所有 Book 路由都受protect
-router.post("/", protect, createBook);
-router.put("/:id", protect, updateBook);
-router.delete("/:id", protect, deleteBook);
+// Protected CRUD routes
+router.post('/',       protect, createBook);
+router.put('/:id',     protect, updateBook);
+router.delete('/:id',  protect, deleteBook);
+
+// Protected borrow/return routes (new functionality #2)
+router.post('/:id/borrow', protect, borrowBook);
+router.post('/:id/return', protect, returnBook);
+
+// Nested review routes (new functionality #1)
+router.use('/:id/reviews', reviewRoutes);
 
 module.exports = router;
