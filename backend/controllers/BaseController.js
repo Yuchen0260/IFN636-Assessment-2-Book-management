@@ -1,8 +1,8 @@
-// OOP – Abstraction & Encapsulation:
-// BaseController encapsulates shared response helpers so every controller
-// inherits consistent error handling without duplicating code.
+// OOP – Abstraction: BaseController is an abstract-like base class.
+// It defines the shared interface and common behaviour all controllers must have.
+// Subclasses inherit these methods and can override them (Polymorphism).
 class BaseController {
-    // Encapsulated error handler — subclasses may override (Polymorphism)
+    // Abstract-like method — defines interface; subclasses may override (Polymorphism)
     handleError(res, error) {
         return res.status(500).json({ message: error.message });
     }
@@ -13,6 +13,11 @@ class BaseController {
 
     badRequest(res, message) {
         return res.status(400).json({ message });
+    }
+
+    // Shared success response — inherited by all subclasses
+    sendSuccess(res, data, statusCode = 200) {
+        return res.status(statusCode).json({ success: true, data });
     }
 }
 
