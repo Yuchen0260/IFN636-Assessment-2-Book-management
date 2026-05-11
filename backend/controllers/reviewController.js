@@ -1,4 +1,5 @@
 // OOP – Inheritance: ReviewController extends BaseController.
+// OOP – Polymorphism: handleError is overridden to add review-specific logging.
 // New functionality #1: Book Reviews & Ratings.
 const BaseController = require('./BaseController');
 const Review = require('../models/Review');
@@ -6,6 +7,12 @@ const Book = require('../models/Book');
 const bookEvents = require('../events/bookEvents');
 
 class ReviewController extends BaseController {
+    // Polymorphism: overrides BaseController.handleError with specialised behaviour
+    handleError(res, error) {
+        console.error('[ReviewController Error]', error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+
     // POST /api/books/:id/reviews
     async addReview(req, res) {
         try {
