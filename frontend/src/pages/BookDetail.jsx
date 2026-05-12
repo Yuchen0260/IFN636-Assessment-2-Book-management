@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../axiosConfig";
+import { useAuth } from '../context/AuthContext';
 
 const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -93,12 +95,21 @@ const BookDetail = () => {
                 Back to Home
               </Link>
 
-              <Link
+              {!user ?(
+                <Link
                 to="/login"
                 className="bg-green-600 text-white px-4 py-2 rounded"
               >
                 Login to Manage
+              </Link>) : (
+                <Link
+                to="/books"
+                className="bg-green-600 text-white px-4 py-2 rounded"
+              >
+                Go to Manage
               </Link>
+              )}
+              
             </div>
           </div>
         </div>
