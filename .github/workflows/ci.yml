@@ -1,22 +1,28 @@
 name: CI/CD Pipeline
+
 on:
   push:
     branches:
       - main
+
 jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+
       - name: Install Backend Dependencies
         working-directory: ./backend
         run: npm install
+
       - name: Run Backend Tests
         working-directory: ./backend
         env:
@@ -24,9 +30,15 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           PORT: ${{ secrets.PORT }}
         run: npm test
+
       - name: Install Frontend Dependencies
         working-directory: ./frontend
         run: npm install
+
+      - name: Fix React Scripts Permission
+        working-directory: ./frontend
+        run: chmod +x ./node_modules/.bin/react-scripts
+
       - name: Build Frontend
         working-directory: ./frontend
         run: npm run build
