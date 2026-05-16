@@ -7,7 +7,7 @@ const BookDetail = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchBook = async () => {
