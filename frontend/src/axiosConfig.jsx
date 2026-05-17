@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://54.253.48.157:5001', // live
+  //baseURL: 'http://localhost:5001', // local
+  baseURL: 'http://BookManager-1596291518.ap-southeast-2.elb.amazonaws.com/api', // live ALB
   headers: { 'Content-Type': 'application/json' },
 });
 
