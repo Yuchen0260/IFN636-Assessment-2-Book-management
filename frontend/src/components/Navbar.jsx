@@ -13,16 +13,14 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold">
-
-        <div className="bg-white rounded-full px-4 py-2 shadow-sm inline-flex items-center">
+        <div className="bg-white rounded-full px-4 py-2 shadow-sm inline-flex items-center hover:shadow-md hover:scale-105 transition-transform cursor-pointer">
           <img
-            src="/LIBRARY LOGO.png"
+            src="/LIBRARY%20LOGO.png"
             alt="Library logo"
             className="h-8 w-auto object-contain"
           />
         </div>
       </Link>
-      
 
       <div>
         {user ? (
