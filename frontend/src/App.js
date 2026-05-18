@@ -1,36 +1,1 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Login from './pages/Login';
-import Register from './pages/Register';
-
-import Dashboard from "./pages/Dashboard";
-import BooksList from "./pages/BooksList";
-import AddBook from "./pages/AddBook";
-import EditBook from "./pages/EditBook";
-import Home from "./pages/Home";
-import BookDetail from './pages/BookDetail';
-
-import ProtectedRoute from './components/ProtectedRoute';
-
-function App() {
-  return (
-    <Router>
-      <div className="min-h-screen">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/books" element={<BooksList />} />
-          <Route path="/books/:id" element={<BookDetail />} />
-
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/books/add" element={<ProtectedRoute><AddBook /></ProtectedRoute>} />
-          <Route path="/books/edit/:id" element={<ProtectedRoute><EditBook /></ProtectedRoute>} />
-        </Routes>
-      </div>
-    </Router>
-  );
-}
-
-export default App;
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';import Navbar from './components/Navbar';import Login from './pages/Login';import Register from './pages/Register';import Dashboard from "./pages/Dashboard";import BooksList from "./pages/BooksList";import AddBook from "./pages/AddBook";import EditBook from "./pages/EditBook";import Home from "./pages/Home";import BookDetail from './pages/BookDetail';import AdminPage from './pages/AdminPage';import ProtectedRoute from './components/ProtectedRoute';import AdminRoute from './components/AdminRoute';function App() {  return (    <Router>      <div className="min-h-screen">        <Navbar />        <Routes>          <Route path="/" element={<Home />} />          <Route path="/login" element={<Login />} />          <Route path="/register" element={<Register />} />          <Route path="/books/:id" element={<BookDetail />} />          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />          <Route path="/books" element={<ProtectedRoute><BooksList /></ProtectedRoute>} />          <Route path="/books/add" element={<AdminRoute><AddBook /></AdminRoute>} />          <Route path="/books/edit/:id" element={<AdminRoute><EditBook /></AdminRoute>} />          <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />        </Routes>      </div>    </Router>  );}export default App;

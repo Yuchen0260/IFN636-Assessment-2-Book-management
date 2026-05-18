@@ -13,23 +13,28 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
       <Link to="/" className="text-2xl font-bold">
-
-        <div className="bg-white rounded-full px-4 py-2 shadow-sm inline-flex items-center">
+        <div className="bg-white rounded-full px-4 py-2 shadow-sm inline-flex items-center hover:shadow-md hover:scale-105 transition-transform cursor-pointer">
           <img
-            src="/LIBRARY LOGO.png"
+            src="/LIBRARY%20LOGO.png"
             alt="Library logo"
             className="h-8 w-auto object-contain"
           />
         </div>
       </Link>
-      
 
-      <div>
+      <div className="flex items-center gap-4">
         {user ? (
           <>
-            <Link to="/dashboard" className="mr-4">Dashboard</Link>
-            <Link to="/books" className="mr-4">Books</Link>
-            <Link to="/books/add" className="mr-4">Add Book</Link>
+            <Link to="/dashboard">Dashboard</Link>
+            {user.role === 'admin' && (
+              <>
+                <Link to="/books">Books</Link>
+                <Link to="/books/add">Add Book</Link>
+                <Link to="/admin" className="bg-purple-500 px-3 py-1 rounded hover:bg-purple-700">
+                  Admin
+                </Link>
+              </>
+            )}
             <button
               onClick={handleLogout}
               className="bg-red-500 px-4 py-2 rounded hover:bg-red-700"
@@ -39,7 +44,7 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to="/login" className="mr-4">Login</Link>
+            <Link to="/login">Login</Link>
             <Link
               to="/register"
               className="bg-green-500 px-4 py-2 rounded hover:bg-green-700"

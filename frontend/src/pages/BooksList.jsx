@@ -27,46 +27,57 @@ const BooksList = () => {
 
   const filteredBooks = useMemo(() => {
     const keyword = searchTerm.trim().toLowerCase();
-
     if (!keyword) return books;
-
-    return books.filter((book) => {
-      return (
-        book.title?.toLowerCase().includes(keyword) ||
-        book.author?.toLowerCase().includes(keyword) ||
-        book.category?.toLowerCase().includes(keyword) ||
-        book.isbn?.toLowerCase().includes(keyword) ||
-        book.status?.toLowerCase().includes(keyword)
-      );
-    });
+    return books.filter((book) =>
+      book.title?.toLowerCase().includes(keyword) ||
+      book.author?.toLowerCase().includes(keyword) ||
+      book.category?.toLowerCase().includes(keyword) ||
+      book.isbn?.toLowerCase().includes(keyword) ||
+      book.status?.toLowerCase().includes(keyword)
+    );
   }, [books, searchTerm]);
 
   const handleDelete = async (bookId) => {
     const confirmed = window.confirm("Are you sure you want to delete this book?");
     if (!confirmed) return;
-
     try {
       await axiosInstance.delete(`/api/books/${bookId}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+        headers: { Authorization: `Bearer ${user.token}` },
       });
-
       setBooks(books.filter((book) => book._id !== bookId));
     } catch (error) {
-      console.error("Failed to delete book:", error);
       alert(error.response?.data?.message || "Failed to delete book.");
     }
   };
 
-  if (loading) {
-    return <div className="p-6">Loading books...</div>;
-  }
+  const handleBorrow = async (bookId) => {
+    try {
+      await axiosInstance.post(`/api/books/${bookId}/borrow`, {}, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      fetchBooks();
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to borrow book.");
+    }
+  };
+
+  const handleReturn = async (bookId) => {
+    try {
+      await axiosInstance.post(`/api/books/${bookId}/return`, {}, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      fetchBooks();
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to return book.");
+    }
+  };
+
+  if (loading) return <div className="p-6">Loading books...</div>;
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
-        <h1 className="text-3xl font-bold">Book Records Management</h1>
+        <h1 className="text-3xl font-bold">Book Records</h1>
 
         <div className="flex gap-3">
           <input
@@ -76,13 +87,14 @@ const BooksList = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full md:w-80 p-2 border rounded"
           />
-
-          <Link
-            to="/books/add"
-            className="bg-green-600 text-white px-4 py-2 rounded whitespace-nowrap"
-          >
-            Add Book
-          </Link>
+          {user?.role === 'admin' && (
+            <Link
+              to="/books/add"
+              className="bg-green-600 text-white px-4 py-2 rounded whitespace-nowrap"
+            >
+              Add Book
+            </Link>
+          )}
         </div>
       </div>
 
@@ -106,11 +118,7 @@ const BooksList = () => {
               {filteredBooks.map((book) => (
                 <tr key={book._id}>
                   <td className="p-3 border">
-                    <img
-                      src={book.coverImage}
-                      alt={book.title}
-                      className="w-12 h-16 object-cover rounded"
-                    />
+                    <img src={book.coverImage} alt={book.title} className="w-12 h-16 object-cover rounded" />
                   </td>
                   <td className="p-3 border">{book.title}</td>
                   <td className="p-3 border">{book.author}</td>
@@ -118,20 +126,41 @@ const BooksList = () => {
                   <td className="p-3 border">{book.category}</td>
                   <td className="p-3 border">{book.status}</td>
                   <td className="p-3 border">
-                    <div className="flex gap-2">
-                      <Link
-                        to={`/books/edit/${book._id}`}
-                        className="bg-yellow-500 text-white px-3 py-1 rounded"
-                      >
-                        Edit
-                      </Link>
-
-                      <button
-                        onClick={() => handleDelete(book._id)}
-                        className="bg-red-600 text-white px-3 py-1 rounded"
-                      >
-                        Delete
-                      </button>
+                    <div className="flex gap-2 flex-wrap">
+                      {user?.role === 'admin' ? (
+                        <>
+                          <Link
+                            to={`/books/edit/${book._id}`}
+                            className="bg-yellow-500 text-white px-3 py-1 rounded"
+                          >
+                            Edit
+                          </Link>
+                          <button
+                            onClick={() => handleDelete(book._id)}
+                            className="bg-red-600 text-white px-3 py-1 rounded"
+                          >
+                            Delete
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          {book.status === 'available' ? (
+                            <button
+                              onClick={() => handleBorrow(book._id)}
+                              className="bg-blue-600 text-white px-3 py-1 rounded"
+                            >
+                              Borrow
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleReturn(book._id)}
+                              className="bg-green-600 text-white px-3 py-1 rounded"
+                            >
+                              Return
+                            </button>
+                          )}
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
