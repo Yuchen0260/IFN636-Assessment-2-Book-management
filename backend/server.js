@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const compression = require('compression');
 const db = require('./config/db');
 const bookRoutes = require('./routes/bookRoutes');
 const requestLogger = require('./middleware/RequestLoggerMiddleware');
@@ -10,7 +9,6 @@ dotenv.config();
 
 const app = express();
 
-app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
