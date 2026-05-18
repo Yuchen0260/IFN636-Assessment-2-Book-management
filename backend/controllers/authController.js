@@ -20,7 +20,7 @@ class AuthController extends BaseController {
             const user = await User.create({ name, email, password });
             res.status(201).json({
                 id: user.id, name: user.name, email: user.email,
-                token: this._generateToken(user.id),
+                role: user.role, token: this._generateToken(user.id),
             });
         } catch (error) {
             this.handleError(res, error);
@@ -34,11 +34,36 @@ class AuthController extends BaseController {
             if (user && (await bcrypt.compare(password, user.password))) {
                 res.json({
                     id: user.id, name: user.name, email: user.email,
-                    token: this._generateToken(user.id),
+                    role: user.role, token: this._generateToken(user.id),
                 });
             } else {
                 res.status(401).json({ message: 'Invalid email or password' });
             }
+        } catch (error) {
+            this.handleError(res, error);
+        }
+    }
+
+    async getUsers(req, res) {
+        try {
+            const users = await User.find({}).select('-password');
+            res.json(users);
+        } catch (error) {
+            this.handleError(res, error);
+        }
+    }
+
+    async updateUserRole(req, res) {
+        try {
+            const user = await User.findById(req.params.id);
+            if (!user) return this.notFound(res, 'User');
+            const { role } = req.body;
+            if (!['admin', 'customer'].includes(role)) {
+                return this.badRequest(res, 'Invalid role');
+            }
+            user.role = role;
+            await user.save();
+            res.json({ id: user.id, name: user.name, email: user.email, role: user.role });
         } catch (error) {
             this.handleError(res, error);
         }
@@ -87,4 +112,6 @@ module.exports = {
     loginUser:         controller.loginUser.bind(controller),
     getProfile:        controller.getProfile.bind(controller),
     updateUserProfile: controller.updateUserProfile.bind(controller),
+    getUsers:          controller.getUsers.bind(controller),
+    updateUserRole:    controller.updateUserRole.bind(controller),
 };
